@@ -10,6 +10,12 @@ from tkinter import Label
 
 
 class SzallodasApp(tk.Tk):
+
+    def frissit_foglalasok_listat(self):
+        self.foglalasok_listbox.delete(0, tk.END)  # Töröljük a korábbi elemeket
+        for foglalas in self.szalloda.foglalasok:
+            self.foglalasok_listbox.insert(tk.END, str(foglalas))
+
     def __init__(self):
         super().__init__()
         self.title("Helyes's Hotel & Spa")
@@ -30,6 +36,8 @@ class SzallodasApp(tk.Tk):
 
         self.create_widgets()
 
+        self.foglalasok_listbox = tk.Listbox(self.visszajelzes_frame, width=40)
+        self.foglalasok_listbox.pack(side=tk.LEFT, fill=tk.BOTH)
     def create_widgets(self):
         # Gombok a bal oldalon
         gombok_frame = tk.Frame(self, padx=20, pady=20)
@@ -40,6 +48,9 @@ class SzallodasApp(tk.Tk):
 
         btn_lemond = tk.Button(gombok_frame, text="Foglalás lemondása", command=self.lemondas_ablak)
         btn_lemond.pack(pady=10)
+
+        btn_frissit = tk.Button(gombok_frame, text="Foglalások listázása", command=self.frissit_foglalasok_listat)
+        btn_frissit.pack(pady=10)
 
         btn_kilepes = tk.Button(gombok_frame, text="Kilépés", command=self.destroy)
         btn_kilepes.pack(pady=10)
@@ -121,6 +132,7 @@ class SzallodasApp(tk.Tk):
 
         lemondas_gomb = tk.Button(lemondas_ablak, text="Lemondás", command=lemondas_gomb_kattintas)
         lemondas_gomb.pack(pady=10)
+
 
 if __name__ == "__main__":
     app = SzallodasApp()
